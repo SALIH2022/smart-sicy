@@ -1,0 +1,61 @@
+int sensor =0;
+int motor=3;
+76
+int val=0;
+int pir=4;
+int state = LOW;
+int light1=5;
+int light2=6;
+int light3=7;
+void setup() {
+Serial.begin(9600);
+pinMode(motor,OUTPUT);
+pinMode(light1,OUTPUT);
+pinMode(light2,OUTPUT);
+pinMode(light3,OUTPUT);
+digitalWrite(light1,LOW);
+digitalWrite(light2,LOW);
+digitalWrite(light3,LOW);
+digitalWrite(motor,HIGH);
+pinMode(pir,INPUT);
+}
+void loop() {
+sensor=analogRead(A0);
+//Serial.println(sensor);
+if(sensor>400){
+ digitalWrite(motor,LOW);
+ }else {
+ digitalWrite(motor,HIGH);
+ }
+delay(100);
+val = digitalRead(pir);
+Serial.println(val); 
+if (val == HIGH) {
+delay(100); // delay 100 milliseconds
+if (state == LOW) {
+77
+Serial.println("Motion detected!");
+state = HIGH; 
+Serial.println(""); 
+digitalWrite(light1,HIGH);
+delay(2000);
+digitalWrite(light2,HIGH);
+delay(2000);
+digitalWrite(light3,HIGH);
+delay(2000);
+digitalWrite(light1,LOW);
+delay(2000);
+digitalWrite(light2,LOW);
+delay(2000);
+digitalWrite(light3,LOW);
+delay(2000);
+}
+}
+else {
+delay(200); // delay 200 milliseconds
+if (state == HIGH){
+Serial.println("Motion stopped!");
+state = LOW; 
+}
+}
+}
